@@ -1,0 +1,23 @@
+#banner-img{
+  height: 160px;
+  width: 160px;
+}
+#headline{
+  background: #3ba2db;
+}
+
+.thumbnail-photo{
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  box-shadow: 3px 1px 5px gray;
+}
+
+.name-tag{
+  font-size: 1.25em;
+}
+.headline-text{
+  color: black;
+}

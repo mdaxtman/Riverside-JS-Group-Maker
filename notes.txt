@@ -1,0 +1,26 @@
+//create a group making application that seperates into equal-sized groups with even distribution of experience.
+
+//no more than 5 members to a team
+//number of teams can expand indefinitely
+
+// how will people's skills be rated?
+  //stars
+  //int of skill level
+//how will groups be sorted?
+  //weigh even distribution vs distribution of skill levels
+  //what are the group sizes/ how many groups (at most or least desired?);
+
+//functions
+  //read value of user input
+  //create dataset with user name and experience
+  //update localstorage
+    //class roster
+    //groups
+  //pull data from localstorage
+  //divide names into groups in arrays in an object
+  //create group wrapped in HTML tags
+  //append group to DOM
+
+//objects
+  //members
+  //groups

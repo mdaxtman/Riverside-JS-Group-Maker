@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Group Maker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="container-fluid" id="headline">
+    <div class="col-md-4">
+      <img id="banner-img">
+    </div>
+    <div class="col-md-8">
+      <h1 id="banner-headline" class="headline-text"></h1>
+      <h4 id="banner-meeting" class="headline-text"></h4>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="col-md-3 col-sm-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            Group Roster
+            <div class="btn-group btn-group-sm pull-right" role="group">
+              <button type="button" class="btn btn-default" aria-label="Experience Sort" title="sort by experience">
+                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-default" aria-label="Name Sort" title="sort by name">
+                <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <li class="list-group-item"> 
+              <p class="text-center">
+                <img class="thumbnail-photo pull-left" src="http://photos3.meetupstatic.com/photos/member/7/6/4/a/thumb_236550282.jpeg">
+                <span class="name-tag">
+                  Mike Axtman
+                </span> 
+                <span class="badge pull-right alert-info">
+                  skill: 3
+                </span>
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <kgb></kgb>
+  </div>
+  <script src="kgb.js"></script>                      
+  <script src="app.js"></script>
+  <script src="https://api.meetup.com/riversidejs/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&callback=groupData"></script>
+  <script src="https://api.meetup.com/2/profiles?group_urlname=RiversideJS&key=53e53186ab3be513c6e1a2d6b1e79&order=visited&desc=true&callback=memberData"></script>
+  <!-- <script src="https://api.meetup.com/2/rsvps/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&event_id=221170973&sign=true&callback=rsvpData"></script> -->
+  <!-- <script src="https://api.meetup.com/2/event/221170973/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&group_urlname=RiversideJS&callback=eventData"></script> -->
+  <script src="https://api.meetup.com/2/events/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&group_urlname=RiversideJS&status=past&desc=true&callback=eventData"></script>
+</body>
+</html>
