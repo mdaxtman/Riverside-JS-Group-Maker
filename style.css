@@ -12,7 +12,9 @@
   border-radius: 20px;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
-  box-shadow: 3px 1px 5px gray;
+  box-shadow: 5px 1px 6px gray;
+  -webkit-box-shadow: 5px 1px 6px gray;
+  -moz-box-shadow: 5px 1px 6px gray;
 }
 
 .name-tag{

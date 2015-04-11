@@ -32,9 +32,25 @@ var configureModel = function(){
     var attending = memberList.filter(function(obj){
       return RSVPList[obj.member_id] !== undefined;
     });
-    console.log(attending);
+
     //create model reference in framework
-    kgb.model.construct('attending', attending);
+    kgb.model.construct('rosterModel', attending);
+    kgb.view.construct('rosterView', 
+    '<li class="list-group-item">'+ 
+      '<p class="text-center">'+
+        '<img class="thumbnail-photo pull-left" kgb-attr="src=value.photo.thumb_link">'+
+        '<span kgb-render="value.name" class="name-tag">'+
+        '</span>'+ 
+        '<span kgb-render="parseInt(value.answers[0].answer)" class="badge pull-right alert-info">'+
+        '</span>'+
+      '</p>'+
+    '</li>'
+    );
+    kgb.insert({
+      model: 'rosterModel',
+      view: 'rosterView',
+      component: 'roster'
+    });
   }
 };
 
