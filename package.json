@@ -1,0 +1,32 @@
+{
+  "name": "Riverside-JS-Group-Maker",
+  "version": "1.0.0",
+  "description": "Group-making application for the Riverside JS Meetup group. It uses meetup api and a custom-built framework to build out groups of varying size, with emphasis on even distribution of skill levels across all groups",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.12.3",
+    "ejs": "^2.3.1",
+    "express": "^4.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mdaxtman/Riverside-JS-Group-Maker.git"
+  },
+  "keywords": [
+    "meetup",
+    "api",
+    "bootstrap",
+    "vanilla",
+    "js"
+  ],
+  "author": "Mike Axtman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdaxtman/Riverside-JS-Group-Maker/issues"
+  },
+  "homepage": "https://github.com/mdaxtman/Riverside-JS-Group-Maker"
+}
