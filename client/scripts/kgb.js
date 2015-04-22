@@ -5,15 +5,22 @@ var KGB = function(){
   this.modelLog = {};
   this.viewLog = {};
   var self = this;
-  this.insert = function(obj){
-    if(obj.model && obj.view && obj.component){
+  this.update = function(obj){
+    if(obj.model && obj.toView && obj.component){
       var currentModel = self.modelLog[obj.model];
-      var currentView = self.viewLog[obj.view];
+      var currentView = self.viewLog[obj.toView];
       var componentList = document.getElementsByTagName('kgb-component');
       var component;
+      if(typeof obj.fromView === 'undefined'){
+        currentModel.elements.forEach(function(elem){
+          elem.remove();
+        });
+        currentModel.elements = [];  
+      }
       for(var i = 0; i < componentList.length; i++){
         if(obj.component === componentList[i].getAttribute('which')){
           component = componentList[i];
+          break;
         }
       }
       if(!currentModel){
@@ -25,6 +32,7 @@ var KGB = function(){
       if(!component){
         throw 'please provide reference to an existing component';
       }
+      //handle templating values in an array
       if(currentModel.type === 'array'){ 
         currentModel.data.forEach(function(value){
           var temp = document.createElement('div');
@@ -44,17 +52,18 @@ var KGB = function(){
               addContent[i].removeAttribute('kgb-render');
             }
           }
-          console.log(component.parentElement);
+          // var elementArray = Array.prototype.slice.call(temp.children);
+          // elementArray.forEach(function(element){
+          //   component.insertAdjacentElement('afterbegin', element);
+          // });
           while(temp.children.length > 0){
+            currentModel.elements.push(temp.children[0]);
             component.parentElement.insertBefore(temp.children[0], component);
           }
         });
       }
-  /*
-      insert model values into elements
-  */
     }else{
-      throw 'you must define a model, view and component';
+      throw 'you must define a model, toView and component';
     }
   };
   this.state = {
@@ -142,9 +151,8 @@ var KGB = function(){
     construct : function(name, dataStructure){
       var type,
         log;
-      if(self.modelLog[name] === undefined){
-        self.modelLog[name] = {}; 
-        // self.modelLog[name] = {}; 
+      if(typeof self.modelLog[name] === 'undefined'){
+        self.modelLog[name] = {};  
         if(typeof dataStructure ==='string'){
           type = 'string';
         }else if(Array.isArray(dataStructure)){
@@ -158,8 +166,10 @@ var KGB = function(){
         }
         self.modelLog[name].data = dataStructure;
         self.modelLog[name].type = type;
+        self.modelLog[name].elements = [];
       }else{
-        throw 'model already exists, use the model.update method';
+        this.destroy(name);
+        this.construct(name, dataStructure);
       }
     },
     update : function(name, dataStructure){
@@ -173,7 +183,17 @@ var KGB = function(){
     },
     destroy : function(name){
       if(self.modelLog[name]){
+        for(var i = 0; i < self.modelLog[name].elements.length; i++){
+          self.modelLog[name].elements[i].remove();  
+        }
         delete self.modelLog[name];
+      }
+    },
+    get: function(name){
+      if(self.modelLog[name]){
+        return self.modelLog[name];
+      }else{
+        return null;
       }
     }
 

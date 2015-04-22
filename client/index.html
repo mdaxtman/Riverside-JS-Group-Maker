@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Group Maker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <div class="container-fluid" id="headline">
+    <div class="col-md-4">
+      <img id="banner-img">
+    </div>
+    <div class="col-md-8">
+      <h1 id="banner-headline" class="headline-text"></h1>
+      <h4 id="banner-meeting" class="headline-text"></h4>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="col-md-3 col-sm-3 roster-box">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <h3> Group Roster 
+            <button type="button" class="btn btn-primary pull-right" id="create">
+              Create Groups
+            </button>
+            </h3>
+          </div>
+          <div class="panel-title">
+            <div class="btn-group btn-group-sm" role="group">
+              <select id="group-size">
+                <option value="" default disabled="true" selected>Group Size</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>  
+              <select id="group-quantity">
+                <option value="" default disabled="true" selected># of Groups</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+            <div class="btn-group btn-group-sm pull-right" role="group">
+              <button type="button" class="btn btn-default" id="experience-button" aria-label="Experience Sort" title="sort by experience">
+                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-default" id="name-button" aria-label="Name Sort" title="sort by name">
+                <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <kgb-component which="roster"></kgb-component>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <kgb-component which="groups"></kgb-compenent>
+  </div>
+  <script src="scripts/kgb.js"></script>
+  <script src="scripts/helperfunctions.js"></script>                      
+  <script src="scripts/groupmaker.config.js"></script>
+  <script src="scripts/eventhandlers.js"></script>
+  <script src="app/groupmaker.js"></script>
+  <script src="https://api.meetup.com/riversidejs/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&callback=groupData"></script>
+  <script src="https://api.meetup.com/2/profiles?group_urlname=RiversideJS&key=53e53186ab3be513c6e1a2d6b1e79&order=visited&desc=true&callback=memberData"></script>
+  <!-- <script src="https://api.meetup.com/2/rsvps/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&event_id=221170973&sign=true&callback=rsvpData"></script> -->
+  <!-- <script src="https://api.meetup.com/2/event/221170973/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&group_urlname=RiversideJS&callback=eventData"></script> -->
+  <script src="https://api.meetup.com/2/events/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&group_urlname=RiversideJS&status=upcoming&desc=true&callback=eventData"></script>
+</body>
+</html>
