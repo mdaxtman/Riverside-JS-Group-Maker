@@ -39,22 +39,7 @@ var groupModelConstructor = function(num){
 var assignGroups = function(attendModel, groupSize, numberOfGroups){
   var i, j, currentNumber, workFromFront, len = attendModel.length;
   if(groupSize){
-    var size = 0;
-    var number = 1;
-    for(i = 0, j = len-1; i <= j; i++, j--){
-      attendModel[i].groupNumber = number;
-      size++;
-      if(size === parseInt(groupSize)){
-        j++;
-      }else{
-        attendModel[j].groupNumber = number;
-        size++;
-      }
-      if(size === parseInt(groupSize)){
-        number++;
-        size = 0;
-      }
-    } 
+    return assignGroups(attendModel, null, Math.ceil(len/groupSize));
   }else if(numberOfGroups){
     currentNumber = 1;
     workFromFront = true;
@@ -126,6 +111,8 @@ var resetRosterOnClick = function(){
   this.removeEventListener('click', resetRosterOnClick);
   this.addEventListener('click', createGroupsOnClick);
   this.innerText = 'Create Groups';
+  sizeSelect.removeAttribute('disabled');
+  numberOfGroupsSelect.removeAttribute('disabled');
   sizeSelect.value = '';
   numberOfGroupsSelect.value = '';
   updateGroupModel();
@@ -140,5 +127,7 @@ var createGroupsOnClick = function(){
     this.removeEventListener('click', createGroupsOnClick);
     this.addEventListener('click', resetRosterOnClick);
     this.innerText = 'Reset Roster';
+    sizeSelect.setAttribute('disabled', 'true');
+    numberOfGroupsSelect.setAttribute('disabled', 'true');
   }
 };
