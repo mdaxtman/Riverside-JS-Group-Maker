@@ -36,8 +36,8 @@ var groupModelConstructor = function(num){
   kgb.model.construct('groupModel', model);
 };
 
-var assignGroups = function(attendModel, groupSize, groupNumber){
-  var i, j, currentNumber, len = attendModel.length;
+var assignGroups = function(attendModel, groupSize, numberOfGroups){
+  var i, j, currentNumber, workFromFront, len = attendModel.length;
   if(groupSize){
     var size = 0;
     var number = 1;
@@ -55,13 +55,24 @@ var assignGroups = function(attendModel, groupSize, groupNumber){
         size = 0;
       }
     } 
-  }else if(groupNumber){
+  }else if(numberOfGroups){
     currentNumber = 1;
-    for(i = 0, j = len-1 ; i <= j; i++, j--){
-      attendModel[i].groupNumber = currentNumber;
-      attendModel[j].groupNumber = currentNumber++;
-      if(currentNumber > parseInt(groupNumber)){
-        currentNumber = 1;
+    workFromFront = true;
+    i = 0;
+    j = len - 1;
+    while(i <= j){
+      if(workFromFront){
+        attendModel[i++].groupNumber = currentNumber++;
+        if(currentNumber > parseInt(numberOfGroups)){
+          currentNumber = 1;
+          workFromFront = false;
+        }
+      }else{
+        attendModel[j--].groupNumber = currentNumber++;
+        if(currentNumber > parseInt(numberOfGroups)){
+          currentNumber = 1;
+          workFromFront = true;
+        }
       }
     }
   }
