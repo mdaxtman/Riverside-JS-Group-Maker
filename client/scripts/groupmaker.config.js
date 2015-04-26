@@ -1,22 +1,22 @@
-// kgb.state.construct({
+// mvc.state.construct({
 //   name: 'main', 
-//   template: '<p>this is the main state</p> <kgb></kgb> ', 
+//   template: '<p>this is the main state</p> <mvc></mvc> ', 
 //   path: '/main'
 // });
 
-// kgb.state.nest({
+// mvc.state.nest({
 //   name: 'nested', 
-//   template: '<p>this is the nested State <kgb></kgb></p>', 
+//   template: '<p>this is the nested State <mvc></mvc></p>', 
 //   path: '/child'
 // }, 'main');
 
-// kgb.state.nest({
+// mvc.state.nest({
 //   name: 'deeper', 
 //   template: '<a id="anchor" title="my tool tip" href="http://www.google.com">poop</a>', 
 //   path: '/grandchild'
 // }, 'nested');
 
-// kgb.state.go('deeper');
+// mvc.state.go('deeper');
 
 var memberList,
   attending,
@@ -27,7 +27,7 @@ var memberList,
   sizeSelect = d.getElementById('group-size'),
   numberOfGroupsSelect = d.getElementById('group-quantity');
 
-var configureModel = function(){
+var config = function(){
   apiCallCount++;
   if(apiCallCount >= 4){
   //filter the memberList and create new array with rsvp members
@@ -53,7 +53,7 @@ var groupData = function(results){
   
   bannerHeadline = d.getElementById('banner-headline');
   bannerHeadline.innerText = results.data.name;
-  configureModel();  
+  config();  
 };
 
 var eventData = function(data){
@@ -71,7 +71,7 @@ var eventData = function(data){
     script = d.createElement('script');
     script.setAttribute('src', source);
     d.body.appendChild(script);
-    configureModel();
+    config();
   }else if(!prevEventScript){
     prevEventScript = d.createElement('script');
     prevEventScript.setAttribute('src', "https://api.meetup.com/2/events/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&group_urlname=RiversideJS&status=past&desc=true&callback=eventData");
@@ -83,7 +83,7 @@ var eventData = function(data){
 var memberData = function(data){
   //retreives the full list of 200 most recently visiting members to the page
   memberList = data.results;
-  configureModel();
+  config();
 };
 
 var rsvpData = function(data){
@@ -91,6 +91,6 @@ var rsvpData = function(data){
   data.results.forEach(function(obj){
     RSVPList[obj.member.member_id] = obj.member.name; 
   });
-  configureModel();
+  config();
 };
 

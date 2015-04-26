@@ -55,9 +55,9 @@
 
 
 
-var KGB = function(){
+var MVC = function(){
   var body;
-  var w = window;
+  var d = document;
   this.stateLog = {};
   this.modelLog = {};
   this.viewLog = {};
@@ -66,7 +66,7 @@ var KGB = function(){
     if(obj.model && obj.toView && obj.component){
       var currentModel = self.modelLog[obj.model];
       var currentView = self.viewLog[obj.toView];
-      var componentList = document.getElementsByTagName('kgb-component');
+      var componentList = d.getElementsByTagName('mvc-component');
       var component;
       if(typeof obj.fromView === 'undefined'){
         currentModel.elements.forEach(function(elem){
@@ -92,21 +92,21 @@ var KGB = function(){
       //handle templating values in an array
       if(currentModel.type === 'array'){ 
         currentModel.data.forEach(function(value){
-          var temp = document.createElement('div');
+          var temp = d.createElement('div');
           temp.innerHTML = currentView;
-          var addContent = temp.querySelectorAll('[kgb-render]');
-          var addAttribute = temp.querySelectorAll('[kgb-attr]');
+          var addContent = temp.querySelectorAll('[mvc-render]');
+          var addAttribute = temp.querySelectorAll('[mvc-attr]');
           var longer = addContent.length > addAttribute.length ? addContent.length : addAttribute.length;
           for(var i = 0; i < longer; i++){
             if(addAttribute[i]){
-              var attr = addAttribute[i].getAttribute('kgb-attr').split('=');
+              var attr = addAttribute[i].getAttribute('mvc-attr').split('=');
               addAttribute[i].setAttribute(attr[0], eval(attr[1]));
-              addAttribute[i].removeAttribute('kgb-attr');
+              addAttribute[i].removeAttribute('mvc-attr');
             }
             if(addContent[i]){
-              var content = addContent[i].getAttribute('kgb-render');
+              var content = addContent[i].getAttribute('mvc-render');
               addContent[i].innerHTML = eval(content);
-              addContent[i].removeAttribute('kgb-render');
+              addContent[i].removeAttribute('mvc-render');
             }
           }
           // var elementArray = Array.prototype.slice.call(temp.children);
@@ -159,9 +159,9 @@ var KGB = function(){
     },
     go: function(stateName, children){
       if(body === undefined){
-        body = document.body.innerHTML;
+        body = d.body.innerHTML;
       }else{
-        document.body.innerHTML = body;
+        d.body.innerHTML = body;
       }
       var currentState;
       var list = self.state.listStates();
@@ -194,7 +194,7 @@ var KGB = function(){
       });
       if(isState){
         toState.children = typeof toState.children === 'undefined' ? [] : toState.children; 
-        var n = new KGB();
+        var n = new MVC();
         stateParams.parent = to;
         n.state.construct(stateParams);
         toState.children.push(n);
@@ -277,10 +277,10 @@ var KGB = function(){
       }
     },
     stateTemplate : function(stateObject){
-      var elem = document.getElementsByTagName('kgb')[0];
+      var elem = d.getElementsByTagName('mvc')[0];
       var parentNode = elem.parentElement;
       var s = stateObject;
-      var tempElement = document.createElement('div');
+      var tempElement = d.createElement('div');
       
       tempElement.innerHTML = s.template;
       while(tempElement.children.length > 0){
@@ -291,4 +291,4 @@ var KGB = function(){
   }; 
 };
 
-var kgb = new KGB();
+var mvc = new MVC();

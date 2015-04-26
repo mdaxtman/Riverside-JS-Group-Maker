@@ -33,7 +33,7 @@ var groupModelConstructor = function(num){
     };
     model.push(obj);
   }
-  kgb.model.construct('groupModel', model);
+  mvc.model.construct('groupModel', model);
 };
 
 var assignGroups = function(attendModel, groupSize, numberOfGroups){
@@ -71,19 +71,19 @@ var combineViews = function(){
     groupList['group-' + member.groupNumber].push(member);
   });
    for(var prop in groupList){
-      kgb.model.construct(prop, groupList[prop]);
-      kgb.update({
+      mvc.model.construct(prop, groupList[prop]);
+      mvc.update({
         model: prop,
         toView: 'rosterView',
         component: prop
       });
    }
-   kgb.model.update('rosterModel', []);
+   mvc.model.update('rosterModel', []);
    updateRosterModel();
 };
 
 var updateRosterModel = function(){
-  kgb.update({
+  mvc.update({
       model: 'rosterModel',
       toView: 'rosterView',
       component: 'roster'
@@ -91,7 +91,7 @@ var updateRosterModel = function(){
 };
 
 var updateGroupModel = function(){
-  kgb.update({
+  mvc.update({
     model: 'groupModel',
     toView: 'groupsView',
     component: 'groups'
@@ -106,8 +106,8 @@ var resetRosterOnClick = function(){
   }
   groupList = {};
   rosterModel.sort(sortBySkill);
-  kgb.model.update('rosterModel', rosterModel);
-  kgb.model.construct('groupModel', []);
+  mvc.model.update('rosterModel', rosterModel);
+  mvc.model.construct('groupModel', []);
   this.removeEventListener('click', resetRosterOnClick);
   this.addEventListener('click', createGroupsOnClick);
   this.innerText = 'Create Groups';
