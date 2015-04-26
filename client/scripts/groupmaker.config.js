@@ -17,80 +17,78 @@
 // }, 'nested');
 
 // mvc.state.go('deeper');
+var apiCallCount = 0, RSVPList = {}, memberList, attending,
+    d = document, groupList = {};  
 
-var memberList,
-  attending,
-  groupList = {},
-  d = document,
-  apiCallCount = 0,
-  RSVPList = {},
-  sizeSelect = d.getElementById('group-size'),
-  numberOfGroupsSelect = d.getElementById('group-quantity');
+var apis = (function(){
+  return {
 
-var config = function(){
-  apiCallCount++;
-  if(apiCallCount >= 4){
-  //filter the memberList and create new array with rsvp members
-  //this is necessary because the RSVP list doesn't have the skill list
-    attending = memberList.filter(function(obj){
-      return RSVPList[obj.member_id] !== undefined;
-    });
+    config : function(){
+      apiCallCount++;
+      if(apiCallCount >= 4){
+      //filter the memberList and create new array with rsvp members
+      //this is necessary because the RSVP list doesn't have the skill list
+        attending = memberList.filter(function(obj){
+          return RSVPList[obj.member_id] !== undefined;
+        });
+        attending.sort(this.sortBySkill);
 
-    attending.sort(sortBySkill);
+        //create model reference in framework
+        this.initializeApplication(attending);
+      }
+    },
 
-    //create model reference in framework
-    initializeApplication(attending);
-  }
-};
+    //jsonp callbacks
+    groupData : function(results){
+      //adds group image to banner and adds the name of the group
+      var bannerImg, bannerHeadline;
+      bannerImg = d.getElementById('banner-img');
+      bannerImg.setAttribute('src', results.data.group_photo.highres_link);
+      
+      bannerHeadline = d.getElementById('banner-headline');
+      bannerHeadline.innerText = results.data.name;
+      this.config();  
+    },
+
+    eventData : function(data){
+      var bannerMeeting, script, ID, source, prevEventScript = d.getElementById('previous-events');
+
+      if(data.results && data.results.length > 0){
+        //adds event title
+        bannerMeeting = d.getElementById('banner-meeting');
+        bannerMeeting.innerText = data.results[0].name;
+        
+        //picks up event id for upcoming event and adds another script tag to obtain rsvps for that event
+        ID = data.results[0].id;
+        source = 'https://api.meetup.com/2/rsvps/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&event_id='+ ID + '&sign=true&callback=groupMaker.rsvpData';
+        
+        script = d.createElement('script');
+        script.setAttribute('src', source);
+        d.body.appendChild(script);
+        this.config();
+      }else if(!prevEventScript){
+        prevEventScript = d.createElement('script');
+        prevEventScript.setAttribute('src', "https://api.meetup.com/2/events/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&group_urlname=RiversideJS&status=past&desc=true&callback=groupMaker.eventData");
+        prevEventScript.setAttribute('id', 'previous-events');
+        d.body.appendChild(prevEventScript);
+      }
+    },
+
+    memberData : function(data){
+      //retreives the full list of 200 most recently visiting members to the page
+      memberList = data.results;
+      this.config();
+    },
+
+    rsvpData : function(data){
+      //retreives all rsvps for a particular event
+      data.results.forEach(function(obj){
+        RSVPList[obj.member.member_id] = obj.member.name; 
+      });
+      this.config();
+    }
+  };
 
 
-//jsonp callbacks
-var groupData = function(results){
-  //adds group image to banner and adds the name of the group
-  var bannerImg, bannerHeadline;
-  bannerImg = d.getElementById('banner-img');
-  bannerImg.setAttribute('src', results.data.group_photo.highres_link);
-  
-  bannerHeadline = d.getElementById('banner-headline');
-  bannerHeadline.innerText = results.data.name;
-  config();  
-};
 
-var eventData = function(data){
-  var bannerMeeting, script, ID, source, prevEventScript = d.getElementById('previous-events');
-
-  if(data.results && data.results.length > 0){
-    //adds event title
-    bannerMeeting = d.getElementById('banner-meeting');
-    bannerMeeting.innerText = data.results[0].name;
-    
-    //picks up event id for upcoming event and adds another script tag to obtain rsvps for that event
-    ID = data.results[0].id;
-    source = 'https://api.meetup.com/2/rsvps/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&event_id='+ ID + '&sign=true&callback=rsvpData';
-    
-    script = d.createElement('script');
-    script.setAttribute('src', source);
-    d.body.appendChild(script);
-    config();
-  }else if(!prevEventScript){
-    prevEventScript = d.createElement('script');
-    prevEventScript.setAttribute('src', "https://api.meetup.com/2/events/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&group_urlname=RiversideJS&status=past&desc=true&callback=eventData");
-    prevEventScript.setAttribute('id', 'previous-events');
-    d.body.appendChild(prevEventScript);
-  }
-};
-
-var memberData = function(data){
-  //retreives the full list of 200 most recently visiting members to the page
-  memberList = data.results;
-  config();
-};
-
-var rsvpData = function(data){
-  //retreives all rsvps for a particular event
-  data.results.forEach(function(obj){
-    RSVPList[obj.member.member_id] = obj.member.name; 
-  });
-  config();
-};
-
+})();

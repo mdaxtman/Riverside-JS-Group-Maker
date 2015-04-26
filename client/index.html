@@ -74,12 +74,12 @@
   <script src="scripts/mvc.js"></script>
   <script src="scripts/helperfunctions.js"></script>                      
   <script src="scripts/groupmaker.config.js"></script>
-  <script src="scripts/eventhandlers.js"></script>
   <script src="scripts/groupmaker.js"></script>
-  <script src="https://api.meetup.com/riversidejs/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&callback=groupData"></script>
-  <script src="https://api.meetup.com/2/profiles?group_urlname=RiversideJS&key=53e53186ab3be513c6e1a2d6b1e79&order=visited&desc=true&callback=memberData"></script>
+  <script src="scripts/eventhandlers.js"></script>
+  <script src="https://api.meetup.com/riversidejs/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&callback=groupMaker.groupData"></script>
+  <script src="https://api.meetup.com/2/profiles?group_urlname=RiversideJS&key=53e53186ab3be513c6e1a2d6b1e79&order=visited&desc=true&callback=groupMaker.memberData"></script>
   <!-- <script src="https://api.meetup.com/2/rsvps/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&event_id=221170973&sign=true&callback=rsvpData"></script> -->
   <!-- <script src="https://api.meetup.com/2/event/221170973/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&group_urlname=RiversideJS&callback=eventData"></script> -->
-  <script src="https://api.meetup.com/2/events/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&group_urlname=RiversideJS&status=upcoming&desc=true&callback=eventData"></script>
+  <script src="https://api.meetup.com/2/events/?format=json&key=53e53186ab3be513c6e1a2d6b1e79&sign=true&group_urlname=RiversideJS&status=upcoming&desc=true&callback=groupMaker.eventData"></script>
 </body>
 </html>

@@ -1,29 +1,33 @@
+var sizeSelect = d.getElementById('group-size'),
+  numberOfGroupsSelect = d.getElementById('group-quantity');
+
 sizeSelect.addEventListener('change', function(){
   if(mvc.model.get('rosterModel').data.length > 0){
     var numberOfGroups = Math.ceil(attending.length / this.value);
-    groupModelConstructor(numberOfGroups);
-    assignGroups(attending, this.value, null);
+    groupMaker.groupModelConstructor(numberOfGroups);
+    groupMaker.assignGroups(attending, this.value, null);
   }
     numberOfGroupsSelect.value = '';
 });
 
 numberOfGroupsSelect.addEventListener('change', function(){
   if(mvc.model.get('rosterModel').data.length > 0){
-    groupModelConstructor(this.value);
-    assignGroups(attending, null, this.value);
+    groupMaker.groupModelConstructor(this.value);
+    groupMaker.assignGroups(attending, null, this.value);
   }
     sizeSelect.value = '';
 });
 
 document.getElementById('name-button').addEventListener('click', function(){
-  mvc.model.get('rosterModel').data.sort(sortByName);
-  updateRosterModel(); 
+  Array.prototype.sort.call(mvc.model.get('rosterModel').data, groupMaker.sortByName);
+  groupMaker.updateRosterModel(); 
 });
 
 document.getElementById('experience-button').addEventListener('click', function(){
-  mvc.model.get('rosterModel').data.sort(sortBySkill);
-  updateRosterModel();
+  console.log(mvc.model.get('rosterModel'));
+  Array.prototype.sort.call(mvc.model.get('rosterModel').data, groupMaker.sortBySkill);
+  groupMaker.updateRosterModel();
 });
 
-document.getElementById('create').addEventListener('click', createGroupsOnClick);
+document.getElementById('create').addEventListener('click', groupMaker.createGroupsOnClick);
 
