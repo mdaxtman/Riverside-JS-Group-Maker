@@ -17,6 +17,8 @@
 // }, 'nested');
 
 // mvc.state.go('deeper');
+
+
 var apiCallCount = 0, RSVPList = {}, memberList, attending,
     d = document, groupList = {};  
 
