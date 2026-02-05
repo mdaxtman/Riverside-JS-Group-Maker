@@ -1,4 +1,4 @@
-//create a group making application that seperates into equal-sized groups with even distribution of experience.
+//create a group making application that separates into equal-sized groups with even distribution of experience.
 
 //no more than 5 members to a team
 //number of teams can expand indefinitely
